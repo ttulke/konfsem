@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebSockets + STOMP</title>
+</head>
+<body>
+<script type="importmap">
+    {
+      "imports": {
+        "@stomp/stompjs": "https://ga.jspm.io/npm:@stomp/stompjs@7.0.0/esm6/index.js"
+      }
+    }
+</script>
+
+<script type="module">
+    import { Client } from '@stomp/stompjs';
+
+    const stompClient = new Client({
+        brokerURL: 'ws://localhost:8080/stomp',
+        onConnect: () => {
+            stompClient.subscribe(
+                '/topic/public',
+                message => console.log(`received ${message.body}`)
+            );
+        },
+    });
+
+    window.sendMessage = () => {
+        stompClient.publish(
+            { destination: '/app/message', body: 'First Message' }
+        );
+    }
+
+    stompClient.activate();
+</script>
+<button onclick="sendMessage()">Send Message</button>
+
+</body>
+</html>

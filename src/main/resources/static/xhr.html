@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>XMLHttpRequest</title>
+</head>
+<body>
+<script>
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", "/xhr");
+    xhr.onprogress = () => console.log(xhr.responseText);
+    xhr.send();
+</script>
+</body>
+</html>
